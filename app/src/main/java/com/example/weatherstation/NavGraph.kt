@@ -10,8 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherstation.ui.screens.LoginScreen
 import com.example.weatherstation.ui.screens.MainScreen
-import com.example.weatherstation.ui.screens.RegisterScreen
-import com.example.weatherstation.ui.screens.SplashScreen
+import com.example.weatherstation.ui.screens.SplashRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -35,7 +34,7 @@ fun AppNavigation() {
             startDestination = Splash,
         ) {
             composable<Splash> {
-                SplashScreen(
+                SplashRoute(
                     onTokenValid = {
                         navController.navigate(Main) {
                             popUpTo(Splash) { inclusive = true }
@@ -58,19 +57,6 @@ fun AppNavigation() {
                     },
                     onNavigateToRegister = {
                         navController.navigate(Register)
-                    }
-                )
-            }
-
-            composable<Register> {
-                RegisterScreen(
-                    onRegisterSuccess = {
-                        navController.navigate(Main) {
-                            popUpTo(Login) { inclusive = true }
-                        }
-                    },
-                    onBackToLogin = {
-                        navController.popBackStack()
                     }
                 )
             }
