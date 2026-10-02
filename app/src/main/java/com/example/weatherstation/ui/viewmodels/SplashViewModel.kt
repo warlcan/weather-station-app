@@ -1,9 +1,7 @@
 package com.example.weatherstation.ui.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +15,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
     private val _authState = MutableStateFlow<String?>(null)
     val authState: StateFlow<String?> = _authState.asStateFlow()
 
-    suspend fun checkToken() {
+    fun checkToken() {
         viewModelScope.launch {
             val token: String? = tokenManager.getToken()
 
