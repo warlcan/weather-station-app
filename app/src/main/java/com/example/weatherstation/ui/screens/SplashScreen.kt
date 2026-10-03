@@ -18,6 +18,7 @@ import com.example.weatherstation.ui.theme.WeatherStationTheme
 fun SplashRoute(
     onTokenValid: () -> Unit,
     onTokenInvalid: () -> Unit,
+    onNetworkError: () -> Unit,
     viewModel: SplashViewModel = viewModel()
 ) {
     val authState by viewModel.authState.collectAsState()
@@ -29,6 +30,7 @@ fun SplashRoute(
         when (authState) {
             "VALID" -> onTokenValid()
             "INVALID" -> onTokenInvalid()
+            "NETWORK_ERROR" -> onNetworkError()
             null -> {}
         }
     }
