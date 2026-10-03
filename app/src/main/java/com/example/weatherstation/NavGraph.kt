@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.weatherstation.ui.screens.ErrorScreen
 import com.example.weatherstation.ui.screens.LoginScreen
 import com.example.weatherstation.ui.screens.MainScreen
 import com.example.weatherstation.ui.screens.SplashRoute
@@ -21,6 +22,8 @@ object Login
 object Register
 @Serializable
 object Main
+@Serializable
+object Error
 
 @Composable
 fun AppNavigation() {
@@ -44,6 +47,11 @@ fun AppNavigation() {
                         navController.navigate(Login){
                             popUpTo(Splash) { inclusive = true }
                         }
+                    },
+                    onNetworkError = {
+                        navController.navigate(Error){
+                            popUpTo(Splash) { inclusive = true }
+                        }
                     }
                 )
             }
@@ -54,9 +62,15 @@ fun AppNavigation() {
                         navController.navigate(Main) {
                             popUpTo(Login) { inclusive = true }
                         }
-                    },
-                    onNavigateToRegister = {
-                        navController.navigate(Register)
+                    }
+                )
+            }
+            composable<Error> {
+                ErrorScreen(
+                    onRestart = {
+                        navController.navigate(Splash) {
+                            popUpTo(Error) { inclusive = true }
+                        }
                     }
                 )
             }
