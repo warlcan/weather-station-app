@@ -1,4 +1,4 @@
-package com.example.weatherstation.auth
+package com.example.weatherstation.data.local
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
