@@ -22,6 +22,7 @@ fun SplashRoute(
     viewModel: SplashViewModel = viewModel()
 ) {
     val authState by viewModel.authState.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.checkToken()
     }
