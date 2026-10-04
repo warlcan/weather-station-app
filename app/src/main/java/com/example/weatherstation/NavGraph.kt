@@ -59,7 +59,7 @@ fun AppNavigation() {
             composable<Login> {
                 LoginScreen(
                     onLoginSuccess = {
-                        navController.navigate(Main) {
+                        navController.navigate(Splash) {
                             popUpTo(Login) { inclusive = true }
                         }
                     }
