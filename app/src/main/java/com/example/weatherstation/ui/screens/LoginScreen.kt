@@ -69,13 +69,13 @@ fun LoginScreen(
         when (uiState) {
             is LoginUiState.CodeSent -> showCodeField = true
             is LoginUiState.CodeError -> codeError = "Неправильный код"
-            is LoginUiState.Success -> onLoginSuccess()
             is LoginUiState.NetworkError -> {
                 snackbarHostState.showSnackbar(
                     message = "Проверьте подключение к интернету",
                     actionLabel = "OK"
                 )
             }
+            is LoginUiState.Success -> onLoginSuccess()
             else -> {}
         }
     }
@@ -216,6 +216,7 @@ fun LoginScreen(
                     modifier = Modifier.clickable { }
                 )
             }
+            // === Network Error Snackbar ===
             SnackbarHost(
                 hostState = snackbarHostState,
                 modifier = Modifier
