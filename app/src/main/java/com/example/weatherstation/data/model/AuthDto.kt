@@ -21,5 +21,4 @@ data class VerifyCodeRequest(
 data class VerifyCodeResponse(
     val success: Boolean,
     val token: String?,
-    val message: String?
 )
