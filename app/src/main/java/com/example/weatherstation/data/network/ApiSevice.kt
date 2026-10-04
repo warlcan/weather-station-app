@@ -10,7 +10,6 @@ import com.example.weatherstation.data.model.TokenVerifyRequest
 import com.example.weatherstation.data.model.TokenVerifyResponse
 import com.example.weatherstation.data.model.VerifyCodeRequest
 import com.example.weatherstation.data.model.VerifyCodeResponse
-import retrofit2.http.GET
 
 interface ApiService {
     @POST("api/auth/verify-token")

@@ -2,7 +2,6 @@ package com.example.weatherstation.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherstation.data.local.TokenManager
 import com.example.weatherstation.data.model.SendCodeRequest
