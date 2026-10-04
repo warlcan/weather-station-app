@@ -19,8 +19,6 @@ object Splash
 @Serializable
 object Login
 @Serializable
-object Register
-@Serializable
 object Main
 @Serializable
 object Error
