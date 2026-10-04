@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weatherstation.ui.viewmodels.SplashViewModel
 import com.example.weatherstation.ui.theme.WeatherStationTheme
+import com.example.weatherstation.ui.viewmodels.SplashUiState
 
 @Composable
 fun SplashRoute(
@@ -29,10 +30,10 @@ fun SplashRoute(
 
     LaunchedEffect(authState) {
         when (authState) {
-            "VALID" -> onTokenValid()
-            "INVALID" -> onTokenInvalid()
-            "NETWORK_ERROR" -> onNetworkError()
-            null -> {}
+            is SplashUiState.TokenValid -> onTokenValid()
+            is SplashUiState.TokenInvalid-> onTokenInvalid()
+            is SplashUiState.NetworkError-> onNetworkError()
+            else -> {}
         }
     }
 
