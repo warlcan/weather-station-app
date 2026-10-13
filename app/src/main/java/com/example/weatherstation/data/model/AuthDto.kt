@@ -1,12 +1,5 @@
 package com.example.weatherstation.data.model
 
-data class TokenVerifyRequest(
-    val token: String
-)
-data class TokenVerifyResponse(
-    val isValid: Boolean
-)
-
 data class SendCodeRequest(
     val email: String
 )
