@@ -6,16 +6,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
-import com.example.weatherstation.data.model.TokenVerifyRequest
-import com.example.weatherstation.data.model.TokenVerifyResponse
 import com.example.weatherstation.data.model.VerifyCodeRequest
 import com.example.weatherstation.data.model.VerifyCodeResponse
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Header
 
 interface ApiService {
-    @POST("api/auth/verify-token")
+    @GET("api/auth/verify-token")
     suspend fun verifyToken(
-        @Body request: TokenVerifyRequest
-    ): TokenVerifyResponse
+        @Header("Auth") token: String
+    ): Response<Unit>
 
     @POST("api/auth/send-code")
     suspend fun sendCode(
@@ -29,7 +30,7 @@ interface ApiService {
 }
 
 object NetworkClient {
-    private const val BASE_URL = "http://192.168.1.139"
+    private const val BASE_URL = "http://192.168.1.139:8080"
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()
