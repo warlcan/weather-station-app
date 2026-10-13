@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.example.weatherstation.data.local.TokenManager
-import com.example.weatherstation.data.model.TokenVerifyRequest
 import com.example.weatherstation.data.network.NetworkClient
 import kotlinx.coroutines.flow.StateFlow
 
@@ -33,15 +32,17 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             try {
-                val requestBody = TokenVerifyRequest(token = token)
-                val response = NetworkClient.apiService.verifyToken(requestBody)
+                val response = NetworkClient.apiService.verifyToken(token)
 
-                if (response.isValid) {
+                if (response.isSuccessful) {
                     _authState.value = SplashUiState.TokenValid
-                } else {
+                } else if (response.code() == 401) {
                     tokenManager.saveToken("")
                     _authState.value = SplashUiState.TokenInvalid
+                } else {
+                    _authState.value = SplashUiState.NetworkError
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 _authState.value = SplashUiState.NetworkError
