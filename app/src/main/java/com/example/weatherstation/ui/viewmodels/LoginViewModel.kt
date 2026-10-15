@@ -31,11 +31,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             try {
-                val request = SendCodeRequest(email = email)
-                val response = NetworkClient.apiService.sendCode(request)
+                val response = NetworkClient.apiService.sendCode(email)
 
-                if (response.success) {
+                if (response.isSuccessful) {
                     _uiState.value = LoginUiState.CodeSent
+                } else if (response.code() == 400) {
+                    _uiState.value = LoginUiState.NetworkError
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

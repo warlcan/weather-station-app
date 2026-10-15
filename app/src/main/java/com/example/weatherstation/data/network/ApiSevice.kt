@@ -15,13 +15,13 @@ import retrofit2.http.Header
 interface ApiService {
     @GET("api/app/auth/verify-token")
     suspend fun verifyToken(
-        @Header("Auth") token: String
+        @Header("Token") token: String
     ): Response<Unit>
 
-    @POST("api/app/auth/send-code")
+    @GET("api/app/auth/send-code")
     suspend fun sendCode(
-        @Body request: SendCodeRequest
-    ): SendCodeResponse
+        @Header("Email") email: String
+    ): Response<Unit>
 
     @POST("api/app/auth/verify-code")
     suspend fun verifyCode(
