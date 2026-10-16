@@ -9,6 +9,5 @@ data class VerifyCodeRequest(
     val code: String
 )
 data class VerifyCodeResponse(
-    val success: Boolean,
     val token: String?,
 )
