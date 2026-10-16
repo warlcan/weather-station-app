@@ -1,7 +1,6 @@
 package com.example.weatherstation.data.network
 
 import com.example.weatherstation.data.model.SendCodeRequest
-import com.example.weatherstation.data.model.SendCodeResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -15,12 +14,12 @@ import retrofit2.http.Header
 interface ApiService {
     @GET("api/app/auth/verify-token")
     suspend fun verifyToken(
-        @Header("Token") token: String
+        @Header("Authorization") bearerToken: String
     ): Response<Unit>
 
-    @GET("api/app/auth/send-code")
+    @POST("api/app/auth/send-code")
     suspend fun sendCode(
-        @Header("Email") email: String
+        @Body request: SendCodeRequest
     ): Response<Unit>
 
     @POST("api/app/auth/verify-code")

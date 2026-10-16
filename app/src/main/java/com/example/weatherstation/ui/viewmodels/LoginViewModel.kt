@@ -31,11 +31,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             try {
-                val response = NetworkClient.apiService.sendCode(email)
+                val request = SendCodeRequest(email = email)
+                val response = NetworkClient.apiService.sendCode(request)
 
                 if (response.isSuccessful) {
                     _uiState.value = LoginUiState.CodeSent
-                } else if (response.code() == 400) {
+                } else {
                     _uiState.value = LoginUiState.NetworkError
                 }
             } catch (e: Exception) {
@@ -44,6 +45,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
 
     fun verifyCodeEmail(email: String, code: String) {
         _uiState.value = LoginUiState.Loading
