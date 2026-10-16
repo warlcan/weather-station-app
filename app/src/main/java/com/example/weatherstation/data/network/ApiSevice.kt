@@ -25,7 +25,7 @@ interface ApiService {
     @POST("api/app/auth/verify-code")
     suspend fun verifyCode(
         @Body request: VerifyCodeRequest
-    ): VerifyCodeResponse
+    ): Response<VerifyCodeResponse>
 }
 
 object NetworkClient {

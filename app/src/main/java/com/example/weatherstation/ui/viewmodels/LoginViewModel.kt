@@ -55,11 +55,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 val request = VerifyCodeRequest(email = email, code = code)
                 val response = NetworkClient.apiService.verifyCode(request)
 
-                if (response.success && response.token != null) {
-                    tokenManager.saveToken(response.token)
-                    _uiState.value = LoginUiState.Success
-                } else {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body?.token != null) {
+                        tokenManager.saveToken(body.token)
+                        _uiState.value = LoginUiState.Success
+                    } else {
+                        _uiState.value = LoginUiState.CodeError
+                    }
+                } else if (response.code() == 400 || response.code() == 401) {
                     _uiState.value = LoginUiState.CodeError
+                } else {
+                    _uiState.value = LoginUiState.NetworkError
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
