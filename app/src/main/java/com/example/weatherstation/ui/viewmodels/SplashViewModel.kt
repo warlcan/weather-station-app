@@ -32,7 +32,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             try {
-                val response = NetworkClient.apiService.verifyToken(token)
+                val response = NetworkClient.apiService.verifyToken("Bearer $token")
 
                 if (response.isSuccessful) {
                     _authState.value = SplashUiState.TokenValid
