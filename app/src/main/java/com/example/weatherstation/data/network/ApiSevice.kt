@@ -1,5 +1,7 @@
 package com.example.weatherstation.data.network
 
+import com.example.weatherstation.data.model.ListMeasurementsResponse
+import com.example.weatherstation.data.model.ListStationsResponse
 import com.example.weatherstation.data.model.SendCodeRequest
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,6 +12,7 @@ import com.example.weatherstation.data.model.VerifyCodeResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Query
 
 interface ApiService {
     @GET("api/app/auth/verify-token")
@@ -26,6 +29,17 @@ interface ApiService {
     suspend fun verifyCode(
         @Body request: VerifyCodeRequest
     ): Response<VerifyCodeResponse>
+
+    @GET("api/app/stations")
+    suspend fun getStations(
+        @Header("Authorization") bearerToken: String
+    ): Response<ListStationsResponse>
+
+    @GET("api/app/measurements")
+    suspend fun getMeasurements(
+        @Header("Authorization") bearerToken: String,
+        @Query("station_uids") stationUids: String
+    ): Response<ListMeasurementsResponse>
 }
 
 object NetworkClient {
