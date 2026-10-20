@@ -1,5 +1,7 @@
 package com.example.weatherstation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -8,10 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.weatherstation.data.local.BleManager
+import com.example.weatherstation.ui.screens.AddGatewayScreen
 import com.example.weatherstation.ui.screens.ErrorScreen
 import com.example.weatherstation.ui.screens.LoginScreen
 import com.example.weatherstation.ui.screens.MainScreen
 import com.example.weatherstation.ui.screens.SplashRoute
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,9 +27,13 @@ object Login
 object Main
 @Serializable
 object Error
-
+@Serializable
+object AddGateway
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    bleManager: BleManager
+) {
     val navController = rememberNavController()
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -72,9 +81,18 @@ fun AppNavigation() {
                     }
                 )
             }
-
             composable<Main> {
-                MainScreen()
+                MainScreen(
+                    onAddGateway = {
+                        navController.navigate(AddGateway)
+                    }
+                )
+            }
+            composable<AddGateway> {
+                AddGatewayScreen(
+                    bleManager = bleManager,
+                    onBackClick = {navController.popBackStack()}
+                )
             }
         }
     }
