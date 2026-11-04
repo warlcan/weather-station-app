@@ -48,11 +48,27 @@ import com.example.weatherstation.ui.theme.WeatherStationTheme
 import com.example.weatherstation.ui.viewmodels.LoginUiState
 import com.example.weatherstation.ui.viewmodels.LoginViewModel
 
-
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     viewModel: LoginViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    LoginScreenContent(
+        uiState = uiState,
+        onLoginSuccess = onLoginSuccess,
+        onSendCodeClick = { email -> viewModel.sendCodeEmail(email) },
+        onVerifyCodeClick = { email, code -> viewModel.verifyCodeEmail(email, code) }
+    )
+}
+
+@Composable
+fun LoginScreenContent(
+    uiState: LoginUiState,
+    onLoginSuccess: () -> Unit,
+    onSendCodeClick: (String) -> Unit,
+    onVerifyCodeClick: (String, String) -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var code by remember { mutableStateOf("") }
@@ -64,7 +80,6 @@ fun LoginScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val uiState by viewModel.uiState.collectAsState()
     LaunchedEffect(uiState) {
         when (uiState) {
             is LoginUiState.CodeSent -> showCodeField = true
@@ -113,10 +128,7 @@ fun LoginScreen(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     shape = RoundedCornerShape(12.dp),
                     isError = emailError != null,
-                    supportingText =
-                        emailError?.let { errorText ->
-                            { Text(text = errorText) }
-                        },
+                    supportingText = emailError?.let { errorText -> { Text(text = errorText) } },
                     enabled = !showCodeField,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -131,19 +143,12 @@ fun LoginScreen(
                         value = code,
                         onValueChange = { code = it },
                         label = { Text("Код") },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Default.Pin,
-                                contentDescription = "Verification Code"
-                            )
-                        },
+                        leadingIcon = { Icon(Icons.Default.Pin, contentDescription = "Verification Code") },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                         shape = RoundedCornerShape(12.dp),
                         isError = codeError != null,
-                        supportingText = codeError?.let { errorText ->
-                            { Text(text = errorText) }
-                        },
+                        supportingText = codeError?.let { errorText -> { Text(text = errorText) } },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -155,17 +160,13 @@ fun LoginScreen(
                     Button(
                         onClick = {
                             when {
-                                email.isBlank() -> {
-                                    emailError = "Поле не может быть пустым"
-                                }
-
+                                email.isBlank() -> { emailError = "Поле не может быть пустым" }
                                 !Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() -> {
                                     emailError = "Некорректный формат Email"
                                 }
-
                                 else -> {
                                     emailError = null
-                                    viewModel.sendCodeEmail(email = email.trim())
+                                    onSendCodeClick(email.trim())
                                 }
                             }
                         },
@@ -181,20 +182,11 @@ fun LoginScreen(
                     Button(
                         onClick = {
                             when {
-                                code.isBlank() -> {
-                                    codeError = "Поле не может быть пустым"
-                                }
-
-                                code.length != 6 -> {
-                                    codeError = "Некорректный формат кода"
-                                }
-
+                                code.isBlank() -> { codeError = "Поле не может быть пустым" }
+                                code.length != 6 -> { codeError = "Некорректный формат кода" }
                                 else -> {
                                     codeError = null
-                                    viewModel.verifyCodeEmail(
-                                        email = email.trim(),
-                                        code = code.trim()
-                                    )
+                                    onVerifyCodeClick(email.trim(), code.trim())
                                 }
                             }
                         },
@@ -228,12 +220,16 @@ fun LoginScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "Начальное состояние")
 @Composable
-fun LoginScreenPreview() {
+fun LoginScreenPreviewIdle() {
     WeatherStationTheme {
-        LoginScreen(
+        LoginScreenContent(
+            uiState = LoginUiState.Idle,
             onLoginSuccess = {},
+            onSendCodeClick = {},
+            onVerifyCodeClick = { _, _ -> }
         )
     }
 }
+
