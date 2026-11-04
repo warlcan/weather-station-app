@@ -1,9 +1,13 @@
 [versions]
+accompanistPermissions = "0.37.3"
 agp = "9.4.1"
+composeM3 = "1.13.0"
+composeM3Version = "2.0.0-alpha.28"
 converterGson = "3.0.0"
 coreKtx = "1.19.1"
 datastorePreferences = "1.2.1"
 datastorePreferencesVersion = "1.2.1"
+espIdfProvisioningAndroid = "lib-2.4.4"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -16,18 +20,20 @@ lifecycleRuntimeKtxVersion = "2.11.0"
 navigationCompose = "2.10.2"
 navigationComposeVersion = "2.10.2"
 retrofit = "3.0.0"
-securityCrypto = "1.1.0"
-uiTextGoogleFonts = "1.12.1"
+ycharts = "2.1.0"
+vico = "3.3.1"
+foundationLayout = "1.12.1"
+ui = "1.12.1"
+material3 = "1.4.0"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-androidx-datastore-preferences-v111 = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
-androidx-lifecycle-runtime-ktx-v287 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-navigation-compose-v280 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+esp-idf-provisioning-android = { group = "com.github.espressif.esp-idf-provisioning-android", name = "provisioning", version.ref = "espIdfProvisioningAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -43,6 +49,10 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+ycharts = { module = "co.yml:ycharts", version.ref = "ycharts" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
